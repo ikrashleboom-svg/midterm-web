@@ -42,4 +42,4 @@ This is a website with 5 pages: Home, Menu, About, Gallery and Contact. On the s
 - **Temirlan Nurshaikhinov:** I made the Gallery page with our clients' photos and the Contact page with the form. I also did the footer and the media queries for tablet and mobile.
 
 ## Link to the website
-[put the link here after publishing]
+https://ikrashleboom-svg.github.io/midterm-web/
