@@ -39,5 +39,5 @@ Sheker Coffee is a five-page website: Home, Menu, About, Gallery and Contact. Vi
 - **Temirlan Nurshaikhinov:** Added registration form validation and the interactive gallery lightbox.
 
 ## Links
-- **GitHub repository:** [Add updated repository link]
-- **Published website:** [Add updated website link]
+- **GitHub repository:** https://github.com/ikrashleboom-svg/midterm-web
+- **Published website:** https://ikrashleboom-svg.github.io/midterm-web/
