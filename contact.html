@@ -37,7 +37,7 @@
                         <div class="contact-card">
                             <h2 class="mb-4">Send a message</h2>
 
-                            <form>
+                            <form id="contactForm" novalidate>
                                 <div class="mb-3">
                                     <label class="form-label" for="name">Name</label>
                                     <input class="form-control" id="name" type="text" placeholder="Your name" required>
@@ -60,10 +60,11 @@
 
                                 <div class="mb-3">
                                     <label class="form-label" for="message">Message</label>
-                                    <textarea class="form-control" id="message" rows="5" placeholder="Write your message"></textarea>
+                                    <textarea class="form-control" id="message" rows="5" placeholder="Write your message" required></textarea>
                                 </div>
 
-                                <button class="btn-main" type="submit">Send message</button>
+                                <div id="contactFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+                                <button class="btn-main" type="submit">Check message</button>
                             </form>
                         </div>
                     </div>
@@ -91,6 +92,25 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-5" aria-labelledby="registrationTitle">
+            <div class="container">
+                <div class="contact-card registration-panel">
+                    <h2 id="registrationTitle">Create a Sheker account</h2>
+                    <p>Fill in the form below.</p>
+                    <form id="registerForm" novalidate>
+                        <div class="row g-3">
+                            <div class="col-md-6"><label for="regName" class="form-label">Full name</label><input id="regName" class="form-control" type="text" autocomplete="name" required><div id="regNameFeedback" class="field-feedback" aria-live="polite"></div></div>
+                            <div class="col-md-6"><label for="regEmail" class="form-label">Email</label><input id="regEmail" class="form-control" type="email" autocomplete="email" required><div id="regEmailFeedback" class="field-feedback" aria-live="polite"></div></div>
+                            <div class="col-md-6"><label for="regPassword" class="form-label">Password</label><input id="regPassword" class="form-control" type="password" autocomplete="new-password" required><div class="strength-track"><div id="passwordStrengthBar"></div></div><div id="passwordStrengthText" class="field-feedback" aria-live="polite">Enter a password to check its strength.</div><div id="regPasswordFeedback" class="field-feedback" aria-live="polite"></div></div>
+                            <div class="col-md-6"><label for="regConfirm" class="form-label">Confirm password</label><input id="regConfirm" class="form-control" type="password" autocomplete="new-password" required><div id="regConfirmFeedback" class="field-feedback" aria-live="polite"></div></div>
+                        </div>
+                        <div id="registrationFeedback" class="form-feedback mt-3" role="status" aria-live="polite"></div>
+                        <button class="btn-main mt-3" type="submit">Validate registration</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -129,5 +149,7 @@
             </div>
         </div>
     </footer>
+    <script defer src="js/jquery.min.js"></script>
+    <script defer src="js/script.js"></script>
 </body>
 </html>
