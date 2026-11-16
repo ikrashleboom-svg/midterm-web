@@ -54,9 +54,9 @@ Sheker Coffee is a six-page website: Home, Menu, About, Gallery, Contact and Acc
 - **Temirlan Nurshaikhinov:** Added registration form validation and the interactive gallery lightbox.
 
 ### Final
-- **Azimbek Amandykov:** _TODO: describe your part (e.g. theme toggle, README, report)._
-- **Meiirzhan Tolendi:** _TODO: describe your part (e.g. API integration on the Menu page)._
-- **Temirlan Nurshaikhinov:** _TODO: describe your part (e.g. sign-in page and FAQ)._
+- **Azimbek Amandykov:** Added the light/dark theme toggle saved in localStorage (`setTheme()`), the version for visually impaired users with the A+ button (`setAccessible()`), dark and accessible styles in `style.css`, the AI credit in the footer, updated the README and prepared the report.
+- **Meiirzhan Tolendi:** Added the "Drink ideas" section on the Menu page with TheCocktailDB API: loading drinks with `fetch()` and `async/await` (`getDrinks()`), drink cards and search (`showDrinks()`), full recipe (`getRecipe()`), "Surprise me" and "Refresh" buttons, error handling with `try/catch`.
+- **Temirlan Nurshaikhinov:** Added the Account page with a sign-in form and validation, saving the user in localStorage, "Hi, Name" and Sign out in the navigation (`signIn()`, `signOut()`, `showUser()`), and the FAQ section on the About page with jQuery `slideToggle()` and the +/− indicator.
 
 ## AI usage
 AI tools (Claude by Anthropic) were used as a supporting tool during development of the final project features (theme toggle, sign-in, FAQ, API integration and README). All code was reviewed and tested by the group. This is also credited in the footer of every page.
