@@ -347,6 +347,92 @@ accessButton.addEventListener("click", function() {
     }
 });
 
+const navAccount = document.getElementById("navAccount");
+const navSignOut = document.getElementById("navSignOut");
+const signInForm = document.getElementById("signInForm");
+
+function showUser() {
+    const userName = localStorage.getItem("userName");
+    const userEmail = localStorage.getItem("userEmail");
+
+    if (userName) {
+        navAccount.textContent = "Hi, " + userName;
+        navSignOut.hidden = false;
+    } else {
+        navAccount.textContent = "Sign in";
+        navSignOut.hidden = true;
+    }
+
+    if (signInForm) {
+        if (userName) {
+            document.getElementById("signInPanel").hidden = true;
+            document.getElementById("profilePanel").hidden = false;
+            document.getElementById("profileName").textContent = userName;
+            document.getElementById("profileEmail").textContent = userEmail;
+            document.getElementById("profileDate").textContent = localStorage.getItem("loginDate");
+        } else {
+            document.getElementById("signInPanel").hidden = false;
+            document.getElementById("profilePanel").hidden = true;
+        }
+    }
+}
+
+function signIn(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("signName").value.trim();
+    const email = document.getElementById("signEmail").value.trim();
+    const password = document.getElementById("signPassword").value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    checkField("signName", name.length >= 2, "Enter at least 2 characters");
+    checkField("signEmail", emailPattern.test(email), "Enter a valid email");
+    checkField("signPassword", password.length >= 6, "Enter at least 6 characters");
+
+    if (name.length < 2 || !emailPattern.test(email) || password.length < 6) {
+        document.getElementById("signInFeedback").textContent = "Please check the fields";
+        return;
+    }
+
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("loginDate", new Date().toLocaleString());
+
+    signInForm.reset();
+    document.getElementById("signInFeedback").textContent = "";
+    showUser();
+}
+
+function signOut() {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("loginDate");
+    showUser();
+}
+
+showUser();
+navSignOut.addEventListener("click", signOut);
+
+if (signInForm) {
+    signInForm.addEventListener("submit", signIn);
+    document.getElementById("signOutButton").addEventListener("click", signOut);
+}
+
+$(document).ready(function() {
+    $(".faq-question").click(function() {
+        $(this).next().slideToggle(400);
+
+        let icon = $(this).find(".faq-icon");
+        if (icon.text() === "+") {
+            icon.text("−");
+            $(this).parent().addClass("open");
+        } else {
+            icon.text("+");
+            $(this).parent().removeClass("open");
+        }
+    });
+});
+
 const drinksList = document.getElementById("apiResults");
 const drinkInfo = document.getElementById("apiDetails");
 const apiStatus = document.getElementById("apiStatus");
