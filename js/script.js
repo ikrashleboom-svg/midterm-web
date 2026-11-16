@@ -346,3 +346,118 @@ accessButton.addEventListener("click", function() {
         setAccessible(true);
     }
 });
+
+const drinksList = document.getElementById("apiResults");
+const drinkInfo = document.getElementById("apiDetails");
+const apiStatus = document.getElementById("apiStatus");
+let drinks = [];
+
+async function getDrinks() {
+    apiStatus.textContent = "Loading...";
+    drinksList.innerHTML = "";
+
+    try {
+        const response = await fetch("https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic");
+
+        if (!response.ok) {
+            throw new Error("Could not load drinks");
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        drinks = data.drinks;
+        showDrinks();
+    } catch (error) {
+        apiStatus.textContent = "Error: " + error.message + ". Please try again later.";
+    }
+}
+
+function showDrinks() {
+    const search = document.getElementById("apiSearch").value.toLowerCase().trim();
+    drinksList.innerHTML = "";
+    let count = 0;
+
+    for (let i = 0; i < drinks.length; i++) {
+        if (drinks[i].strDrink.toLowerCase().includes(search)) {
+            drinksList.innerHTML += `
+                <article class="product-card api-card">
+                    <img src="${drinks[i].strDrinkThumb}/preview" alt="${drinks[i].strDrink}" loading="lazy">
+                    <h3>${drinks[i].strDrink}</h3>
+                    <button type="button" class="btn-outline-custom" onclick="getRecipe(${drinks[i].idDrink})">View recipe</button>
+                </article>
+            `;
+            count++;
+        }
+    }
+
+    if (count === 0) {
+        apiStatus.textContent = "No drinks found";
+    } else {
+        apiStatus.textContent = count + " drinks found";
+    }
+}
+
+async function getRecipe(id) {
+    drinkInfo.hidden = false;
+    drinkInfo.innerHTML = "<p>Loading recipe...</p>";
+
+    try {
+        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+
+        if (!response.ok) {
+            throw new Error("Recipe not found");
+        }
+
+        const data = await response.json();
+        const drink = data.drinks[0];
+
+        let ingredients = "";
+        for (let i = 1; i <= 15; i++) {
+            if (drink["strIngredient" + i]) {
+                let measure = drink["strMeasure" + i] || "";
+                ingredients += `<li>${measure} ${drink["strIngredient" + i]}</li>`;
+            }
+        }
+
+        drinkInfo.innerHTML = `
+            <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
+            <div>
+                <h3>${drink.strDrink}</h3>
+                <p class="api-meta">${drink.strCategory} · ${drink.strGlass}</p>
+                <h4>Ingredients</h4>
+                <ul>${ingredients}</ul>
+                <h4>How to make</h4>
+                <p>${drink.strInstructions}</p>
+                <button type="button" class="btn-outline-custom" onclick="closeRecipe()">Close</button>
+            </div>
+        `;
+        drinkInfo.scrollIntoView({behavior: "smooth"});
+    } catch (error) {
+        drinkInfo.innerHTML = `<p class="invalid">Error: ${error.message}</p>`;
+    }
+}
+
+function closeRecipe() {
+    drinkInfo.hidden = true;
+}
+
+function randomDrink() {
+    if (drinks.length === 0) {
+        apiStatus.textContent = "Drinks are not loaded yet";
+        return;
+    }
+    let random = Math.floor(Math.random() * drinks.length);
+    getRecipe(drinks[random].idDrink);
+}
+
+if (drinksList) {
+    getDrinks();
+    document.getElementById("apiSearch").addEventListener("input", showDrinks);
+    document.getElementById("apiRandom").addEventListener("click", randomDrink);
+    document.getElementById("apiRefresh").addEventListener("click", function() {
+        document.getElementById("apiSearch").value = "";
+        closeRecipe();
+        getDrinks();
+    });
+}
