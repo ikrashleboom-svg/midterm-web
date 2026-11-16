@@ -116,11 +116,7 @@ function filterMenu() {
 
     $("#searchCount").text(count + " drinks found");
 
-    if (count === 0) {
-        $("#noMenuResults").show();
-    } else {
-        $("#noMenuResults").hide();
-    }
+    $("#noMenuResults").prop("hidden", count !== 0);
 }
 
 function showProducts() {
@@ -193,7 +189,7 @@ function editProduct(index) {
     document.getElementById("itemCategory").value = products[index].category;
     document.getElementById("itemPrice").value = products[index].price;
     document.getElementById("saveItem").innerHTML = "Save changes";
-    $("#cancelEdit").show();
+    $("#cancelEdit").prop("hidden", false);
 }
 
 function deleteProduct(index) {
@@ -208,7 +204,7 @@ function clearProductForm() {
     document.getElementById("inventoryForm").reset();
     editIndex = -1;
     document.getElementById("saveItem").innerHTML = "Add drink";
-    $("#cancelEdit").hide();
+    $("#cancelEdit").prop("hidden", true);
 }
 
 function showImage() {
@@ -278,7 +274,6 @@ $(document).ready(function() {
             saveProduct();
         });
         $("#cancelEdit").click(clearProductForm);
-        $("#cancelEdit").hide();
         filterMenu();
         showProducts();
     }
@@ -297,5 +292,57 @@ $(document).ready(function() {
         });
         $("#lightboxNext").click(nextImage);
         $("#lightboxPrev").click(previousImage);
+    }
+});
+
+const themeButton = document.getElementById("themeToggle");
+
+function setTheme(theme) {
+    if (theme === "dark") {
+        document.body.classList.add("dark");
+        document.documentElement.setAttribute("data-bs-theme", "dark");
+        themeButton.innerHTML = "&#9728;";
+    } else {
+        document.body.classList.remove("dark");
+        document.documentElement.setAttribute("data-bs-theme", "light");
+        themeButton.innerHTML = "&#9790;";
+    }
+}
+
+setTheme(localStorage.getItem("theme"));
+
+themeButton.addEventListener("click", function() {
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "light");
+        setTheme("light");
+    } else {
+        localStorage.setItem("theme", "dark");
+        setTheme("dark");
+    }
+});
+
+const accessButton = document.getElementById("accessToggle");
+
+function setAccessible(isOn) {
+    if (isOn) {
+        document.body.classList.add("accessible");
+        accessButton.textContent = "A-";
+        accessButton.title = "Normal version";
+    } else {
+        document.body.classList.remove("accessible");
+        accessButton.textContent = "A+";
+        accessButton.title = "Version for visually impaired";
+    }
+}
+
+setAccessible(localStorage.getItem("accessible") === "on");
+
+accessButton.addEventListener("click", function() {
+    if (document.body.classList.contains("accessible")) {
+        localStorage.setItem("accessible", "off");
+        setAccessible(false);
+    } else {
+        localStorage.setItem("accessible", "on");
+        setAccessible(true);
     }
 });

@@ -533,3 +533,265 @@ a {
 [hidden] {
     display: none !important;
 }
+
+.theme-toggle,
+.nav-signout {
+    background: transparent;
+    border: 0;
+    padding: 5px 0;
+    color: inherit;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+.theme-toggle:hover,
+.nav-signout:hover {
+    color: var(--blue);
+}
+.ai-credit {
+    display: inline-block;
+}
+
+body.dark {
+    --blue: #8f86ff;
+    --dark: #f1efe9;
+    --cream: #121218;
+    --white: #1d1d26;
+    --muted: #b4b2bd;
+}
+body.dark {
+    background: var(--cream);
+    color: var(--dark);
+}
+body.dark .site-header {
+    border-bottom-color: #2c2c38;
+}
+body.dark .text-primary {
+    color: var(--blue) !important;
+}
+body.dark .btn-main,
+body.dark .filter-button.active,
+body.dark .filter-button:hover,
+body.dark .btn-outline-custom:hover {
+    background: var(--blue);
+    color: #12121a;
+}
+body.dark .blue-block {
+    background: #2417c9;
+    color: #ffffff;
+}
+body.dark .product-card,
+body.dark .menu-list,
+body.dark .contact-card,
+body.dark .menu-tools,
+body.dark .inventory-card,
+body.dark .registration-panel,
+body.dark .faq-item,
+body.dark .api-details {
+    background: var(--white);
+    border-color: #2f2f3c;
+}
+body.dark .product-card:nth-child(even) {
+    background: #232040;
+}
+body.dark .menu-row {
+    border-bottom-color: #3a3a48;
+}
+body.dark .menu-table {
+    background: var(--white);
+}
+body.dark .menu-table th {
+    background: #2417c9;
+}
+body.dark .menu-table td,
+body.dark .info-list li {
+    border-bottom-color: #2f2f3c;
+}
+body.dark .menu-table tr:nth-child(even) td {
+    background: #23232e;
+}
+body.dark .filter-button {
+    background: transparent;
+}
+body.dark .site-footer {
+    background: #0a0a0e;
+    color: #ffffff;
+}
+body.dark .footer-links a:hover {
+    color: var(--blue);
+}
+body.dark .hero-badge {
+    background: var(--white);
+    color: var(--dark);
+}
+body.dark .strength-track {
+    background-color: #3a3a48;
+}
+body.dark .valid {
+    color: #5fd38a;
+}
+body.dark .invalid {
+    color: #ff7b7b;
+}
+body.dark .site-footer .logo {
+    color: #ffffff;
+}
+.access-toggle {
+    font-weight: 700;
+}
+@media (max-width: 576px) {
+    .theme-toggle {
+    position: absolute;
+    top: 22px;
+    right: 18px;
+    font-size: 20px;
+    }
+    .access-toggle {
+    right: 52px;
+    font-size: 18px;
+    }
+}
+body.accessible {
+    --blue: #ffe600;
+    --dark: #ffffff;
+    --cream: #000000;
+    --white: #000000;
+    --muted: #ffffff;
+    background: #000000;
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 1.8;
+    letter-spacing: 0.3px;
+}
+body.accessible .site-header,
+body.accessible .site-footer,
+body.accessible .blue-block {
+    background: #000000;
+    color: #ffffff;
+    border-bottom: 2px solid #ffe600;
+}
+body.accessible .site-footer {
+    border-top: 2px solid #ffe600;
+}
+body.accessible .logo,
+body.accessible .site-footer .logo {
+    color: #ffe600;
+}
+body.accessible .main-nav a,
+body.accessible .theme-toggle,
+body.accessible .nav-signout {
+    font-size: 20px;
+    text-decoration: underline;
+}
+body.accessible .theme-toggle {
+    text-decoration: none;
+    color: #ffe600;
+}
+body.accessible a {
+    text-decoration: underline;
+}
+body.accessible .text-primary,
+body.accessible .text-muted,
+body.accessible .price,
+body.accessible .menu-row span:last-child,
+body.accessible .category-title,
+body.accessible .api-meta,
+body.accessible .hero-copy h1 span,
+body.accessible .hero-badge strong {
+    color: #ffe600 !important;
+}
+body.accessible .hero-copy p,
+body.accessible .page-hero p,
+body.accessible .section-intro,
+body.accessible .product-card p,
+body.accessible .menu-row,
+body.accessible .faq-answer,
+body.accessible .gallery-grid figcaption,
+body.accessible .info-list li,
+body.accessible .footer-bottom {
+    color: #ffffff;
+    font-size: 20px;
+}
+body.accessible .product-card,
+body.accessible .product-card:nth-child(even),
+body.accessible .menu-list,
+body.accessible .contact-card,
+body.accessible .menu-tools,
+body.accessible .inventory-card,
+body.accessible .registration-panel,
+body.accessible .faq-item,
+body.accessible .api-details,
+body.accessible .feature-box,
+body.accessible .hero-badge,
+body.accessible .hero-visual {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #ffe600;
+}
+body.accessible .product-card h3 {
+    font-size: 26px;
+}
+body.accessible .btn-main,
+body.accessible .filter-button.active,
+body.accessible .filter-button:hover,
+body.accessible .btn-outline-custom:hover {
+    background: #ffe600;
+    color: #000000;
+    border-color: #ffe600;
+    text-decoration: none;
+}
+body.accessible .btn-outline-custom,
+body.accessible .filter-button {
+    background: #000000;
+    color: #ffe600;
+    border: 2px solid #ffe600;
+    text-decoration: none;
+}
+body.accessible .form-control,
+body.accessible .form-control:focus {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    font-size: 20px;
+}
+body.accessible .form-control::placeholder {
+    color: #cccccc;
+}
+body.accessible .form-label {
+    font-size: 20px;
+}
+body.accessible .menu-table,
+body.accessible .menu-table td,
+body.accessible .menu-table tr:nth-child(even) td,
+body.accessible .table,
+body.accessible .table td,
+body.accessible .table th {
+    background: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
+    font-size: 20px;
+    --bs-table-bg: #000000;
+    --bs-table-color: #ffffff;
+    --bs-table-striped-bg: #000000;
+    --bs-table-striped-color: #ffffff;
+}
+body.accessible .menu-table th {
+    background: #ffe600;
+    color: #000000;
+}
+body.accessible .faq-icon {
+    background: #ffe600;
+    color: #000000;
+}
+body.accessible .valid {
+    color: #7dff9a;
+}
+body.accessible .invalid {
+    color: #ff8f8f;
+}
+body.accessible a:focus,
+body.accessible button:focus,
+body.accessible .form-control:focus {
+    outline: 4px solid #ffe600;
+    outline-offset: 3px;
+}

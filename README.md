@@ -1,7 +1,7 @@
 # Sheker Coffee - Coffee Online Shop
 
 ## Project title and topic
-Sheker Coffee is a coffee shop website for a coffee stand at Astana IT University (AITU). This endterm project continues our midterm website.
+Sheker Coffee is a coffee shop website for a coffee stand at Astana IT University (AITU). This final project continues our midterm and endterm website.
 
 ## Group members
 - Azimbek Amandykov
@@ -9,7 +9,7 @@ Sheker Coffee is a coffee shop website for a coffee stand at Astana IT Universit
 - Temirlan Nurshaikhinov
 
 ## Short description
-Sheker Coffee is a five-page website: Home, Menu, About, Gallery and Contact. Visitors can view drinks and prices, read about the coffee shop, browse photos and use the contact form. For the endterm, we added interactive features using JavaScript and jQuery.
+Sheker Coffee is a six-page website: Home, Menu, About, Gallery, Contact and Account (Sign in). Visitors can view drinks and prices, read about the coffee shop, browse photos and use the contact form. For the endterm, we added interactive features using JavaScript and jQuery. For the final project, we added a light/dark theme, sign-in with localStorage, a jQuery FAQ and a public API integration.
 
 ## Features implemented
 - Five responsive pages with the same navigation, header and footer
@@ -19,6 +19,19 @@ Sheker Coffee is a five-page website: Home, Menu, About, Gallery and Contact. Vi
 - Dynamic product table with Create, Read, Update and Delete (CRUD) operations
 - Image gallery with a lightbox, previous and next buttons, and jQuery fade effects
 
+### Final project features
+- **Light/Dark theme toggle** (button in the navigation bar on every page). The theme is saved in `localStorage` (`theme`), stays after refresh and is the same on all pages.
+- **Sign in with localStorage** (`account.html`). The form checks name, email and password. Only the name, email and sign-in date are saved in `localStorage`; the password is not saved. Signed-in users see "Hi, Name" and a Sign out button in the navigation on every page, and a profile card on the Account page. Sign out removes the saved data.
+- **FAQ with jQuery** (About page). Six questions; answers open and close with `.slideToggle()` and a `+` / `−` indicator.
+- **API integration** (Menu page, "Drink ideas" section) with the free [TheCocktailDB](https://www.thecocktaildb.com/api.php) API:
+  - `fetch()` with `async/await`, data in JSON format
+  - shows non-alcoholic drinks, search by name, "Surprise me" random recipe and Refresh button
+  - "View recipe" loads ingredients, glass and instructions
+  - `try/catch` and `response.ok` check show an error message if the request fails
+
+### Our extra feature (not in the requirements)
+- **Version for visually impaired** (button `A+` in the navigation on every page). It turns on a high-contrast mode: black background, white and yellow text, bigger font, underlined links, thick borders and a clear focus outline for keyboard users. The choice is saved in `localStorage` (`accessible`), so it stays after refresh and works on all pages. Press `A-` to go back to the normal version.
+
 ## Technologies used
 - HTML5
 - CSS3
@@ -26,6 +39,8 @@ Sheker Coffee is a five-page website: Home, Menu, About, Gallery and Contact. Vi
 - JavaScript
 - jQuery
 - Google Fonts
+- localStorage
+- Fetch API + TheCocktailDB public API
 
 ## Individual contributions
 ### Midterm
@@ -37,6 +52,14 @@ Sheker Coffee is a five-page website: Home, Menu, About, Gallery and Contact. Vi
 - **Azimbek Amandykov:** Updated page styling and helped integrate JavaScript and jQuery into the existing website.
 - **Meiirzhan Tolendi:** Added live menu search, category filters and the CRUD product table.
 - **Temirlan Nurshaikhinov:** Added registration form validation and the interactive gallery lightbox.
+
+### Final
+- **Azimbek Amandykov:** _TODO: describe your part (e.g. theme toggle, README, report)._
+- **Meiirzhan Tolendi:** _TODO: describe your part (e.g. API integration on the Menu page)._
+- **Temirlan Nurshaikhinov:** _TODO: describe your part (e.g. sign-in page and FAQ)._
+
+## AI usage
+AI tools (Claude by Anthropic) were used as a supporting tool during development of the final project features (theme toggle, sign-in, FAQ, API integration and README). All code was reviewed and tested by the group. This is also credited in the footer of every page.
 
 ## Links
 - **GitHub repository:** https://github.com/ikrashleboom-svg/midterm-web
