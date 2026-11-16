@@ -1,0 +1,549 @@
+let products = [
+    {name: "Iced latte", category: "Cold Coffee", price: 990},
+    {name: "Green matcha", category: "Matcha", price: 1090},
+    {name: "Bubble Tea", category: "Bubble Tea", price: 1290}
+];
+let editIndex = -1;
+let selectedCategory = "All";
+let currentImage = 0;
+
+function checkField(id, correct, message) {
+    let input = document.getElementById(id);
+    let feedback = document.getElementById(id + "Feedback");
+
+    if (correct) {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        feedback.innerHTML = "Correct";
+        feedback.className = "field-feedback valid";
+    } else {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        feedback.innerHTML = message;
+        feedback.className = "field-feedback invalid";
+    }
+}
+
+function checkPassword() {
+    let password = document.getElementById("regPassword").value;
+    let strength = document.getElementById("passwordStrengthText");
+    let bar = document.getElementById("passwordStrengthBar");
+
+    if (password.length === 0) {
+        strength.innerHTML = "Enter a password";
+        bar.style.width = "0%";
+    } else if (password.length < 6) {
+        strength.innerHTML = "Weak password";
+        bar.style.width = "33%";
+        bar.style.backgroundColor = "red";
+    } else if (password.length < 10 || !/[0-9]/.test(password)) {
+        strength.innerHTML = "Medium password";
+        bar.style.width = "66%";
+        bar.style.backgroundColor = "orange";
+    } else {
+        strength.innerHTML = "Strong password";
+        bar.style.width = "100%";
+        bar.style.backgroundColor = "green";
+    }
+}
+
+function checkRegistration() {
+    let name = document.getElementById("regName").value;
+    let email = document.getElementById("regEmail").value;
+    let password = document.getElementById("regPassword").value;
+    let confirmPassword = document.getElementById("regConfirm").value;
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    checkField("regName", name.trim() !== "", "Enter your name");
+    checkField("regEmail", emailPattern.test(email), "Enter a valid email");
+    checkField("regPassword", password.length >= 6, "Enter at least 6 characters");
+    checkField("regConfirm", confirmPassword !== "" && password === confirmPassword, "Passwords do not match");
+
+    if (name.trim() === "" || !emailPattern.test(email) || password.length < 6 || password !== confirmPassword) {
+        document.getElementById("registrationFeedback").innerHTML = "Please check the fields";
+        return false;
+    }
+
+    document.getElementById("registrationFeedback").innerHTML = "Registration form is valid";
+    return true;
+}
+
+function checkContact() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let message = document.getElementById("message").value;
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (name.trim() === "" || !emailPattern.test(email) || message.trim() === "") {
+        document.getElementById("contactFeedback").innerHTML = "Please fill in all fields correctly";
+        return false;
+    }
+
+    document.getElementById("contactFeedback").innerHTML = "Message is valid";
+    return true;
+}
+
+function filterMenu() {
+    let search = $("#menuSearch").val().toLowerCase();
+    let count = 0;
+
+    $(".category-title").each(function() {
+        let title = $(this);
+        let category = title.text().trim();
+        let list = title.next(".menu-list");
+        let found = 0;
+
+        list.find(".menu-row").each(function() {
+            let name = $(this).text().toLowerCase();
+
+            if ((selectedCategory === "All" || selectedCategory === category) && (name.indexOf(search) !== -1 || category.toLowerCase().indexOf(search) !== -1)) {
+                $(this).show();
+                found++;
+                count++;
+            } else {
+                $(this).hide();
+            }
+        });
+
+        if (found > 0) {
+            title.show();
+            list.show();
+        } else {
+            title.hide();
+            list.hide();
+        }
+    });
+
+    $("#searchCount").text(count + " drinks found");
+
+    $("#noMenuResults").prop("hidden", count !== 0);
+}
+
+function showProducts() {
+    let table = document.getElementById("inventoryRows");
+    table.innerHTML = "";
+
+    for (let i = 0; i < products.length; i++) {
+        let row = document.createElement("tr");
+        let name = document.createElement("td");
+        let category = document.createElement("td");
+        let price = document.createElement("td");
+        let actions = document.createElement("td");
+        let editButton = document.createElement("button");
+        let deleteButton = document.createElement("button");
+
+        name.textContent = products[i].name;
+        category.textContent = products[i].category;
+        price.textContent = products[i].price + " ₸";
+        editButton.innerHTML = "Edit";
+        deleteButton.innerHTML = "Delete";
+        editButton.className = "btn btn-sm btn-outline-primary me-2";
+        deleteButton.className = "btn btn-sm btn-outline-danger";
+
+        editButton.onclick = function() {
+            editProduct(i);
+        };
+        deleteButton.onclick = function() {
+            deleteProduct(i);
+        };
+
+        actions.appendChild(editButton);
+        actions.appendChild(deleteButton);
+        row.appendChild(name);
+        row.appendChild(category);
+        row.appendChild(price);
+        row.appendChild(actions);
+        table.appendChild(row);
+    }
+
+    document.getElementById("inventoryCount").innerHTML = products.length + " products";
+}
+
+function saveProduct() {
+    let name = document.getElementById("itemName").value;
+    let category = document.getElementById("itemCategory").value;
+    let price = Number(document.getElementById("itemPrice").value);
+
+    if (name.trim() === "" || category === "" || price <= 0) {
+        document.getElementById("inventoryFeedback").innerHTML = "Enter name, category and price";
+        return;
+    }
+
+    let product = {name: name, category: category, price: price};
+
+    if (editIndex === -1) {
+        products.push(product);
+        document.getElementById("inventoryFeedback").innerHTML = "Drink added";
+    } else {
+        products[editIndex] = product;
+        document.getElementById("inventoryFeedback").innerHTML = "Drink updated";
+    }
+
+    showProducts();
+    clearProductForm();
+}
+
+function editProduct(index) {
+    editIndex = index;
+    document.getElementById("itemName").value = products[index].name;
+    document.getElementById("itemCategory").value = products[index].category;
+    document.getElementById("itemPrice").value = products[index].price;
+    document.getElementById("saveItem").innerHTML = "Save changes";
+    $("#cancelEdit").prop("hidden", false);
+}
+
+function deleteProduct(index) {
+    if (confirm("Delete this drink?")) {
+        products.splice(index, 1);
+        showProducts();
+        clearProductForm();
+    }
+}
+
+function clearProductForm() {
+    document.getElementById("inventoryForm").reset();
+    editIndex = -1;
+    document.getElementById("saveItem").innerHTML = "Add drink";
+    $("#cancelEdit").prop("hidden", true);
+}
+
+function showImage() {
+    let images = $("#interactiveGallery figure");
+    let picture = images.eq(currentImage);
+
+    $("#lightboxImage").attr("src", picture.find("img").attr("src"));
+    $("#lightboxImage").attr("alt", picture.find("img").attr("alt"));
+    $("#lightboxCaption").text(picture.find("figcaption").text());
+    $("#lightboxCounter").text((currentImage + 1) + " / " + images.length);
+}
+
+function nextImage() {
+    let count = $("#interactiveGallery figure").length;
+    currentImage++;
+    if (currentImage >= count) {
+        currentImage = 0;
+    }
+    showImage();
+}
+
+function previousImage() {
+    let count = $("#interactiveGallery figure").length;
+    currentImage--;
+    if (currentImage < 0) {
+        currentImage = count - 1;
+    }
+    showImage();
+}
+
+$(document).ready(function() {
+    if ($("#registerForm").length) {
+        $("#regPassword").on("input", checkPassword);
+        $("#registerForm input").on("input", checkRegistration);
+        $("#registerForm").submit(function(event) {
+            event.preventDefault();
+            checkRegistration();
+        });
+    }
+
+    if ($("#contactForm").length) {
+        $("#contactForm").submit(function(event) {
+            event.preventDefault();
+            checkContact();
+        });
+    }
+
+    if ($("#menuSearch").length) {
+        $("#categoryFilters").append('<button type="button" class="filter-button active">All</button>');
+
+        $(".category-title").each(function() {
+            let category = $(this).text().trim();
+            $("#categoryFilters").append('<button type="button" class="filter-button">' + category + '</button>');
+            $("#itemCategory").append('<option>' + category + '</option>');
+        });
+
+        $("#menuSearch").on("input", filterMenu);
+        $("#categoryFilters button").click(function() {
+            selectedCategory = $(this).text();
+            $("#categoryFilters button").removeClass("active");
+            $(this).addClass("active");
+            filterMenu();
+        });
+
+        $("#inventoryForm").submit(function(event) {
+            event.preventDefault();
+            saveProduct();
+        });
+        $("#cancelEdit").click(clearProductForm);
+        filterMenu();
+        showProducts();
+    }
+
+    if ($("#interactiveGallery").length) {
+        $("#interactiveGallery figure").click(function() {
+            currentImage = $("#interactiveGallery figure").index(this);
+            showImage();
+            $("#galleryLightbox").removeAttr("hidden");
+            $("#galleryLightbox").attr("aria-hidden", "false");
+            $("#galleryLightbox").fadeIn(300);
+        });
+        $("#lightboxClose").click(function() {
+            $("#galleryLightbox").fadeOut(300);
+            $("#galleryLightbox").attr("aria-hidden", "true");
+        });
+        $("#lightboxNext").click(nextImage);
+        $("#lightboxPrev").click(previousImage);
+    }
+});
+
+const themeButton = document.getElementById("themeToggle");
+
+function setTheme(theme) {
+    if (theme === "dark") {
+        document.body.classList.add("dark");
+        document.documentElement.setAttribute("data-bs-theme", "dark");
+        themeButton.innerHTML = "&#9728;";
+    } else {
+        document.body.classList.remove("dark");
+        document.documentElement.setAttribute("data-bs-theme", "light");
+        themeButton.innerHTML = "&#9790;";
+    }
+}
+
+setTheme(localStorage.getItem("theme"));
+
+themeButton.addEventListener("click", function() {
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "light");
+        setTheme("light");
+    } else {
+        localStorage.setItem("theme", "dark");
+        setTheme("dark");
+    }
+});
+
+const accessButton = document.getElementById("accessToggle");
+
+function setAccessible(isOn) {
+    if (isOn) {
+        document.body.classList.add("accessible");
+        accessButton.textContent = "A-";
+        accessButton.title = "Normal version";
+    } else {
+        document.body.classList.remove("accessible");
+        accessButton.textContent = "A+";
+        accessButton.title = "Version for visually impaired";
+    }
+}
+
+setAccessible(localStorage.getItem("accessible") === "on");
+
+accessButton.addEventListener("click", function() {
+    if (document.body.classList.contains("accessible")) {
+        localStorage.setItem("accessible", "off");
+        setAccessible(false);
+    } else {
+        localStorage.setItem("accessible", "on");
+        setAccessible(true);
+    }
+});
+
+const navAccount = document.getElementById("navAccount");
+const navSignOut = document.getElementById("navSignOut");
+const signInForm = document.getElementById("signInForm");
+
+function showUser() {
+    const userName = localStorage.getItem("userName");
+    const userEmail = localStorage.getItem("userEmail");
+
+    if (userName) {
+        navAccount.textContent = "Hi, " + userName;
+        navSignOut.hidden = false;
+    } else {
+        navAccount.textContent = "Sign in";
+        navSignOut.hidden = true;
+    }
+
+    if (signInForm) {
+        if (userName) {
+            document.getElementById("signInPanel").hidden = true;
+            document.getElementById("profilePanel").hidden = false;
+            document.getElementById("profileName").textContent = userName;
+            document.getElementById("profileEmail").textContent = userEmail;
+            document.getElementById("profileDate").textContent = localStorage.getItem("loginDate");
+        } else {
+            document.getElementById("signInPanel").hidden = false;
+            document.getElementById("profilePanel").hidden = true;
+        }
+    }
+}
+
+function signIn(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("signName").value.trim();
+    const email = document.getElementById("signEmail").value.trim();
+    const password = document.getElementById("signPassword").value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    checkField("signName", name.length >= 2, "Enter at least 2 characters");
+    checkField("signEmail", emailPattern.test(email), "Enter a valid email");
+    checkField("signPassword", password.length >= 6, "Enter at least 6 characters");
+
+    if (name.length < 2 || !emailPattern.test(email) || password.length < 6) {
+        document.getElementById("signInFeedback").textContent = "Please check the fields";
+        return;
+    }
+
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("loginDate", new Date().toLocaleString());
+
+    signInForm.reset();
+    document.getElementById("signInFeedback").textContent = "";
+    showUser();
+}
+
+function signOut() {
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("loginDate");
+    showUser();
+}
+
+showUser();
+navSignOut.addEventListener("click", signOut);
+
+if (signInForm) {
+    signInForm.addEventListener("submit", signIn);
+    document.getElementById("signOutButton").addEventListener("click", signOut);
+}
+
+$(document).ready(function() {
+    $(".faq-question").click(function() {
+        $(this).next().slideToggle(400);
+
+        let icon = $(this).find(".faq-icon");
+        if (icon.text() === "+") {
+            icon.text("−");
+            $(this).parent().addClass("open");
+        } else {
+            icon.text("+");
+            $(this).parent().removeClass("open");
+        }
+    });
+});
+
+const drinksList = document.getElementById("apiResults");
+const drinkInfo = document.getElementById("apiDetails");
+const apiStatus = document.getElementById("apiStatus");
+let drinks = [];
+
+async function getDrinks() {
+    apiStatus.textContent = "Loading...";
+    drinksList.innerHTML = "";
+
+    try {
+        const response = await fetch("https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic");
+
+        if (!response.ok) {
+            throw new Error("Could not load drinks");
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        drinks = data.drinks;
+        showDrinks();
+    } catch (error) {
+        apiStatus.textContent = "Error: " + error.message + ". Please try again later.";
+    }
+}
+
+function showDrinks() {
+    const search = document.getElementById("apiSearch").value.toLowerCase().trim();
+    drinksList.innerHTML = "";
+    let count = 0;
+
+    for (let i = 0; i < drinks.length; i++) {
+        if (drinks[i].strDrink.toLowerCase().includes(search)) {
+            drinksList.innerHTML += `
+                <article class="product-card api-card">
+                    <img src="${drinks[i].strDrinkThumb}/preview" alt="${drinks[i].strDrink}" loading="lazy">
+                    <h3>${drinks[i].strDrink}</h3>
+                    <button type="button" class="btn-outline-custom" onclick="getRecipe(${drinks[i].idDrink})">View recipe</button>
+                </article>
+            `;
+            count++;
+        }
+    }
+
+    if (count === 0) {
+        apiStatus.textContent = "No drinks found";
+    } else {
+        apiStatus.textContent = count + " drinks found";
+    }
+}
+
+async function getRecipe(id) {
+    drinkInfo.hidden = false;
+    drinkInfo.innerHTML = "<p>Loading recipe...</p>";
+
+    try {
+        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+
+        if (!response.ok) {
+            throw new Error("Recipe not found");
+        }
+
+        const data = await response.json();
+        const drink = data.drinks[0];
+
+        let ingredients = "";
+        for (let i = 1; i <= 15; i++) {
+            if (drink["strIngredient" + i]) {
+                let measure = drink["strMeasure" + i] || "";
+                ingredients += `<li>${measure} ${drink["strIngredient" + i]}</li>`;
+            }
+        }
+
+        drinkInfo.innerHTML = `
+            <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
+            <div>
+                <h3>${drink.strDrink}</h3>
+                <p class="api-meta">${drink.strCategory} · ${drink.strGlass}</p>
+                <h4>Ingredients</h4>
+                <ul>${ingredients}</ul>
+                <h4>How to make</h4>
+                <p>${drink.strInstructions}</p>
+                <button type="button" class="btn-outline-custom" onclick="closeRecipe()">Close</button>
+            </div>
+        `;
+        drinkInfo.scrollIntoView({behavior: "smooth"});
+    } catch (error) {
+        drinkInfo.innerHTML = `<p class="invalid">Error: ${error.message}</p>`;
+    }
+}
+
+function closeRecipe() {
+    drinkInfo.hidden = true;
+}
+
+function randomDrink() {
+    if (drinks.length === 0) {
+        apiStatus.textContent = "Drinks are not loaded yet";
+        return;
+    }
+    let random = Math.floor(Math.random() * drinks.length);
+    getRecipe(drinks[random].idDrink);
+}
+
+if (drinksList) {
+    getDrinks();
+    document.getElementById("apiSearch").addEventListener("input", showDrinks);
+    document.getElementById("apiRandom").addEventListener("click", randomDrink);
+    document.getElementById("apiRefresh").addEventListener("click", function() {
+        document.getElementById("apiSearch").value = "";
+        closeRecipe();
+        getDrinks();
+    });
+}

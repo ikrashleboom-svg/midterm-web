@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account | Sheker Coffee</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="nav-wrap">
+            <a class="logo" href="index.html">sheker</a>
+
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="menu.html">Menu</a>
+                <a href="about.html">About</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+                <a href="account.html" id="navAccount">Sign in</a>
+                <button type="button" id="navSignOut" class="nav-signout" hidden>Sign out</button>
+                <button type="button" id="accessToggle" class="theme-toggle access-toggle" aria-label="Version for visually impaired" title="Version for visually impaired">A+</button>
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark theme">&#9790;</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <p class="text-uppercase fw-bold text-primary mb-2">Your account</p>
+            <h1>Sign in</h1>
+            <p>Sign in to get a personal greeting on every page of the Sheker website.</p>
+        </section>
+
+        <section class="pb-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-7">
+                        <div class="contact-card" id="signInPanel">
+                            <h2 class="mb-4">Welcome back</h2>
+
+                            <form id="signInForm" novalidate>
+                                <div class="mb-3">
+                                    <label class="form-label" for="signName">Name</label>
+                                    <input class="form-control" id="signName" type="text" placeholder="Your name" autocomplete="name" required>
+                                    <div id="signNameFeedback" class="field-feedback" aria-live="polite"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="signEmail">Email</label>
+                                    <input class="form-control" id="signEmail" type="email" placeholder="name@example.com" autocomplete="email" required>
+                                    <div id="signEmailFeedback" class="field-feedback" aria-live="polite"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="signPassword">Password</label>
+                                    <input class="form-control" id="signPassword" type="password" placeholder="At least 6 characters" autocomplete="current-password" required>
+                                    <div id="signPasswordFeedback" class="field-feedback" aria-live="polite"></div>
+                                </div>
+
+                                <div id="signInFeedback" class="form-feedback mb-2" role="status" aria-live="polite"></div>
+                                <button class="btn-main" type="submit">Sign in</button>
+                            </form>
+                        </div>
+
+                        <div class="contact-card" id="profilePanel" hidden>
+                            <h2 class="mb-3">Hello, <span id="profileName"></span>!</h2>
+                            <p>You are signed in to Sheker Coffee.</p>
+                            <ul class="info-list mb-4">
+                                <li><strong>Email:</strong><br><span id="profileEmail"></span></li>
+                                <li><strong>Signed in:</strong><br><span id="profileDate"></span></li>
+                            </ul>
+                            <div class="hero-actions">
+                                <a class="btn-main" href="menu.html">Order from the menu</a>
+                                <button type="button" id="signOutButton" class="btn-outline-custom">Sign out</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="contact-card">
+                            <h2>Why sign in?</h2>
+                            <ul class="info-list">
+                                <li>The navigation bar greets you by name on every page.</li>
+                                <li>You stay signed in after refreshing the page.</li>
+                                <li>Only your name and email are saved in your browser. Your password is never stored.</li>
+                            </ul>
+                            <p class="mt-3 mb-0">No account yet? <a class="text-primary fw-bold" href="contact.html#registrationTitle">Register here</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a class="logo" href="index.html">sheker</a>
+                    <p class="mt-3">Coffee, tea and fresh drinks at AITU.</p>
+                </div>
+
+                <div>
+                    <h3>Visit us</h3>
+                    <p>
+                        Astana IT University<br>
+                        Astana, Kazakhstan<br>
+                        <a href="contact.html">Contact us</a>
+                    </p>
+                </div>
+
+                <div>
+                    <h3>Follow</h3>
+
+                    <div class="footer-links">
+                        <a href="https://www.instagram.com/sheker.coffee?cplk=dnNnZXd6ZXlyaW1z" target="_blank" rel="noopener noreferrer">Instagram</a>
+                        <a href="https://www.google.com/search?q=Sheker+Coffee+AITU+TikTok" target="_blank" rel="noopener noreferrer">Find TikTok</a>
+                        <a href="menu.html">Our menu</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2026 Sheker Coffee
+                <span class="ai-credit">· AI tools (Claude by Anthropic) were used as a supporting tool during development.</span>
+            </div>
+        </div>
+    </footer>
+    <script defer src="js/jquery.min.js"></script>
+    <script defer src="js/script.js"></script>
+</body>
+</html>
