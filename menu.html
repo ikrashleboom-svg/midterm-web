@@ -354,6 +354,26 @@
             </div>
         </section>
 
+        <section class="pb-5" id="drinkIdeas" aria-labelledby="drinkIdeasTitle">
+            <div class="container">
+                <h2 id="drinkIdeasTitle" class="section-title">Drink ideas from around the world</h2>
+                <p class="section-intro">Non-alcoholic drink recipes loaded from the free TheCocktailDB API. Search by name and open a recipe.</p>
+
+                <div class="menu-tools">
+                    <label class="form-label" for="apiSearch">Search recipes</label>
+                    <input id="apiSearch" type="search" class="form-control" placeholder="For example: coffee, chocolate, lemon..." autocomplete="off">
+                    <div class="api-actions">
+                        <button type="button" id="apiRandom" class="btn-main">Surprise me</button>
+                        <button type="button" id="apiRefresh" class="btn-outline-custom">Refresh</button>
+                    </div>
+                    <p id="apiStatus" class="small text-muted mt-2" role="status" aria-live="polite"></p>
+                </div>
+
+                <div id="apiDetails" class="api-details" hidden></div>
+                <div id="apiResults" class="api-grid"></div>
+            </div>
+        </section>
+
         <section class="section blue-block" id="inventorySection" aria-labelledby="inventoryTitle">
             <div class="container">
                 <h2 id="inventoryTitle" class="section-title">Manage drink inventory</h2>
