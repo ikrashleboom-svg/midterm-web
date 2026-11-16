@@ -59,7 +59,7 @@ Sheker Coffee is a six-page website: Home, Menu, About, Gallery, Contact and Acc
 - **Temirlan Nurshaikhinov:** Added the Account page with a sign-in form and validation, saving the user in localStorage, "Hi, Name" and Sign out in the navigation (`signIn()`, `signOut()`, `showUser()`), and the FAQ section on the About page with jQuery `slideToggle()` and the +/− indicator.
 
 ## AI usage
-AI tools (Claude by Anthropic) were used as a supporting tool during development of the final project features (theme toggle, sign-in, FAQ, API integration and README). All code was reviewed and tested by the group. This is also credited in the footer of every page.
+We used the AI tool Claude (Anthropic)  to understand how fetch, async/await and the API work. 
 
 ## Links
 - **GitHub repository:** https://github.com/ikrashleboom-svg/midterm-web
